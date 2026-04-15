@@ -1,0 +1,132 @@
+{
+  "app": {
+    "title": "Claude Tasks",
+    "selectSession": "セッションを選択してタスクを表示"
+  },
+  "connection": {
+    "connecting": "接続中",
+    "connected": "接続済み",
+    "reconnecting": "再接続中..."
+  },
+  "sidebar": {
+    "liveUpdates": "ライブ更新",
+    "sessions": "セッション",
+    "allTasks": "全タスク",
+    "searchPlaceholder": "タスク、セッション、プロジェクトを検索...",
+    "allProjects": "全プロジェクト",
+    "allSessions": "全セッション",
+    "activeOnly": "アクティブのみ",
+    "show10": "10件表示",
+    "show20": "20件表示",
+    "show50": "50件表示",
+    "showAll": "全件表示"
+  },
+  "kanban": {
+    "pending": "待機中",
+    "inProgress": "進行中",
+    "completed": "完了",
+    "noPending": "待機中のタスクはありません",
+    "noActive": "進行中のタスクはありません",
+    "noCompleted": "完了タスクはありません"
+  },
+  "task": {
+    "blocked": "ブロック中",
+    "waitingOn": "{{ids}} 待ち",
+    "allTasks": "全タスク",
+    "tasksInProject": "タスク: {{project}}",
+    "taskCount": "{{count}} タスク",
+    "tasksAcrossSessions": "{{count}} タスク（{{sessions}} セッション）",
+    "tasksInThisProject": "{{count}} タスク（このプロジェクト）"
+  },
+  "detail": {
+    "title": "タスク詳細",
+    "taskId": "タスク #{{id}}",
+    "status": "ステータス",
+    "statusPending": "待機中",
+    "statusInProgress": "進行中",
+    "statusCompleted": "完了",
+    "statusControlled": "ステータスは Claude Code によって制御されています",
+    "blockedByDeps": "依存関係によりブロック中",
+    "blockedBy": "ブロック元",
+    "blockedByLabel": "ブロック元:",
+    "blocks": "ブロック先",
+    "blocksLabel": "ブロック先:",
+    "noDependencies": "依存関係なし",
+    "noTasksBlocked": "ブロック先なし",
+    "description": "説明",
+    "noDescription": "説明なし",
+    "addNote": "ノート追加",
+    "notePlaceholder": "Claude へのノートを追加...",
+    "currently": "現在:"
+  },
+  "modal": {
+    "keyboardShortcuts": "キーボードショートカット",
+    "global": "グローバル",
+    "showShortcuts": "キーボードショートカットを表示",
+    "closePanels": "パネルを閉じる / キャンセル",
+    "taskActions": "タスク操作",
+    "deleteSelectedTask": "選択中のタスクを削除",
+    "features": "機能",
+    "bellIcon": "ベルアイコン",
+    "bellDesc": "タスク完了時にデスクトップ通知とサウンドで通知",
+    "viewToggle": "表示切替",
+    "viewToggleDesc": "カンバンとタイムラインの表示を切り替え",
+    "archive": "アーカイブ",
+    "archiveDesc": "7日以上経過したアクティブタスクのないセッションは自動アーカイブ",
+    "gotIt": "OK",
+    "deleteTask": "タスク削除",
+    "deleteConfirm": "タスク「{{subject}}」を削除しますか？この操作は元に戻せません。",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "deleteAllTasks": "全タスク削除",
+    "deleteAllConfirm": "セッション「{{name}}」の {{count}} 件のタスクをすべて削除しますか？",
+    "cannotBeUndone": "この操作は元に戻せません。",
+    "deleteAll": "すべて削除",
+    "deletionResult": "削除結果",
+    "deleteSuccess": "{{count}} 件のタスクをすべて削除しました。",
+    "deletePartial": "{{success}} 件削除、{{failed}} 件失敗。",
+    "close": "閉じる",
+    "cannotStartBlocked": "ブロック中のタスクは開始できません",
+    "blockedTaskMsg": "タスク <strong>#{{id}}</strong> - {{subject}} は以下によりブロックされています:",
+    "resolveFirst": "このタスクを<strong>進行中</strong>にする前に、依存関係を解決してください。",
+    "ok": "OK"
+  },
+  "session": {
+    "archived": "アーカイブ",
+    "noSessions": "セッションが見つかりません",
+    "sessionsAppear": "Claude Code を使用するとタスクが表示されます",
+    "noResults": "「{{query}}」に一致する結果はありません",
+    "tryDifferent": "別の検索語を試すか、検索をクリアしてください",
+    "noActiveForProject": "このプロジェクトにアクティブセッションはありません",
+    "tryAllSessions": "「全セッション」または「全プロジェクト」をお試しください",
+    "noSessionsForProject": "このプロジェクトにセッションはありません",
+    "selectAllProjects": "「全プロジェクト」を選択してすべてを表示",
+    "noActiveSessions": "アクティブセッションはありません",
+    "selectAllSessions": "「全セッション」を選択してすべてを表示",
+    "noTasksToDelete": "このセッションに削除するタスクはありません",
+    "noTimestampData": "タイムスタンプデータのあるタスクはありません"
+  },
+  "notification": {
+    "taskCompleted": "タスク完了",
+    "notificationsOn": "通知オン（クリックでミュート）",
+    "notificationsOff": "通知オフ（クリックで有効化）"
+  },
+  "time": {
+    "justNow": "たった今",
+    "minutesAgo": "{{count}}分前",
+    "hoursAgo": "{{count}}時間前"
+  },
+  "tooltip": {
+    "deleteAllTasks": "このセッションの全タスクを削除",
+    "deleteTask": "タスクを削除 (D)",
+    "toggleTheme": "テーマ切替",
+    "toggleNotifications": "通知切替",
+    "shortcuts": "キーボードショートカット (?)",
+    "clearSearch": "検索クリア",
+    "kanbanView": "カンバン表示",
+    "timelineView": "タイムライン表示"
+  },
+  "lang": {
+    "switchLabel": "日本語"
+  }
+}

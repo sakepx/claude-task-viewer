@@ -1,0 +1,132 @@
+{
+  "app": {
+    "title": "Claude Tasks",
+    "selectSession": "Select a session to view tasks"
+  },
+  "connection": {
+    "connecting": "Connecting",
+    "connected": "Connected",
+    "reconnecting": "Reconnecting..."
+  },
+  "sidebar": {
+    "liveUpdates": "Live Updates",
+    "sessions": "Sessions",
+    "allTasks": "All Tasks",
+    "searchPlaceholder": "Search tasks, sessions, projects...",
+    "allProjects": "All Projects",
+    "allSessions": "All Sessions",
+    "activeOnly": "Active Only",
+    "show10": "Show 10",
+    "show20": "Show 20",
+    "show50": "Show 50",
+    "showAll": "Show All"
+  },
+  "kanban": {
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "noPending": "No pending tasks",
+    "noActive": "No active tasks",
+    "noCompleted": "No completed tasks"
+  },
+  "task": {
+    "blocked": "Blocked",
+    "waitingOn": "Waiting on {{ids}}",
+    "allTasks": "All Tasks",
+    "tasksInProject": "Tasks: {{project}}",
+    "taskCount": "{{count}} tasks",
+    "tasksAcrossSessions": "{{count}} tasks across {{sessions}} sessions",
+    "tasksInThisProject": "{{count}} tasks in this project"
+  },
+  "detail": {
+    "title": "Task Details",
+    "taskId": "Task #{{id}}",
+    "status": "Status",
+    "statusPending": "Pending",
+    "statusInProgress": "In Progress",
+    "statusCompleted": "Completed",
+    "statusControlled": "Status is controlled by Claude Code",
+    "blockedByDeps": "Blocked by dependencies",
+    "blockedBy": "Blocked By",
+    "blockedByLabel": "Blocked by:",
+    "blocks": "Blocks",
+    "blocksLabel": "Blocks:",
+    "noDependencies": "No dependencies",
+    "noTasksBlocked": "No tasks blocked",
+    "description": "Description",
+    "noDescription": "No description",
+    "addNote": "Add Note",
+    "notePlaceholder": "Add a note for Claude...",
+    "currently": "Currently:"
+  },
+  "modal": {
+    "keyboardShortcuts": "Keyboard Shortcuts",
+    "global": "Global",
+    "showShortcuts": "Show keyboard shortcuts",
+    "closePanels": "Close panels or cancel",
+    "taskActions": "Task Actions",
+    "deleteSelectedTask": "Delete selected task",
+    "features": "Features",
+    "bellIcon": "Bell icon",
+    "bellDesc": "Desktop + sound notifications on task completion",
+    "viewToggle": "View toggle",
+    "viewToggleDesc": "Switch between kanban and timeline views",
+    "archive": "Archive",
+    "archiveDesc": "Sessions older than 7 days with no active tasks auto-archive",
+    "gotIt": "Got it",
+    "deleteTask": "Delete Task",
+    "deleteConfirm": "Delete task \"{{subject}}\"? This cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteAllTasks": "Delete All Tasks",
+    "deleteAllConfirm": "Delete all {{count}} task(s) from session \"{{name}}\"?",
+    "cannotBeUndone": "This action cannot be undone.",
+    "deleteAll": "Delete All",
+    "deletionResult": "Deletion Result",
+    "deleteSuccess": "Successfully deleted all {{count}} task(s).",
+    "deletePartial": "Deleted {{success}} task(s). Failed to delete {{failed}} task(s).",
+    "close": "Close",
+    "cannotStartBlocked": "Cannot Start Blocked Task",
+    "blockedTaskMsg": "Task <strong>#{{id}}</strong> - {{subject}} is currently blocked by:",
+    "resolveFirst": "Please resolve these dependencies before moving this task to <strong>In Progress</strong>.",
+    "ok": "OK"
+  },
+  "session": {
+    "archived": "Archived",
+    "noSessions": "No sessions found",
+    "sessionsAppear": "Tasks appear when you use Claude Code",
+    "noResults": "No results for \"{{query}}\"",
+    "tryDifferent": "Try a different search term or clear the search",
+    "noActiveForProject": "No active sessions for this project",
+    "tryAllSessions": "Try \"All Sessions\" or \"All Projects\"",
+    "noSessionsForProject": "No sessions for this project",
+    "selectAllProjects": "Select \"All Projects\" to see all",
+    "noActiveSessions": "No active sessions",
+    "selectAllSessions": "Select \"All Sessions\" to see all",
+    "noTasksToDelete": "No tasks to delete in this session",
+    "noTimestampData": "No tasks with timestamp data"
+  },
+  "notification": {
+    "taskCompleted": "Task completed",
+    "notificationsOn": "Notifications on (click to mute)",
+    "notificationsOff": "Notifications off (click to enable)"
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago"
+  },
+  "tooltip": {
+    "deleteAllTasks": "Delete all tasks in this session",
+    "deleteTask": "Delete task (D)",
+    "toggleTheme": "Toggle theme",
+    "toggleNotifications": "Toggle notifications",
+    "shortcuts": "Keyboard shortcuts (?)",
+    "clearSearch": "Clear search",
+    "kanbanView": "Kanban view",
+    "timelineView": "Timeline view"
+  },
+  "lang": {
+    "switchLabel": "EN"
+  }
+}

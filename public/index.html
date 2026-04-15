@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next-http-backend@2/i18nextHttpBackend.min.js"></script>
   <style>
     :root {
       --bg-deep: #08090a;
@@ -1475,35 +1477,36 @@
         </div>
         <div id="connection-status" class="connection">
           <span class="connection-dot"></span>
-          <span>Connecting</span>
+          <span data-i18n="connection.connecting">Connecting</span>
         </div>
       </header>
 
       <!-- Live Updates -->
       <div class="sidebar-section">
         <div class="section-header">
-          <span>Live Updates</span>
+          <span data-i18n="sidebar.liveUpdates">Live Updates</span>
         </div>
         <div id="live-updates" class="live-updates">
-          <div class="live-empty">No active tasks</div>
+          <div class="live-empty" data-i18n="kanban.noActive">No active tasks</div>
         </div>
       </div>
 
       <!-- Tasks -->
       <div class="sidebar-section flex-1">
         <div class="section-header">
-          <span>Sessions</span>
-          <button onclick="showAllTasks()" style="background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 10px; color: var(--text-secondary); cursor: pointer; font-family: var(--mono);">All Tasks</button>
+          <span data-i18n="sidebar.sessions">Sessions</span>
+          <button onclick="showAllTasks()" style="background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 10px; color: var(--text-secondary); cursor: pointer; font-family: var(--mono);" data-i18n="sidebar.allTasks">All Tasks</button>
         </div>
         <div class="search-container">
           <input
             id="search-input"
             type="text"
             class="search-input"
+            data-i18n-placeholder="sidebar.searchPlaceholder"
             placeholder="Search tasks, sessions, projects..."
             oninput="handleSearch(this.value)"
           />
-          <button id="search-clear-btn" class="search-clear" onclick="clearSearch()" title="Clear search">
+          <button id="search-clear-btn" class="search-clear" onclick="clearSearch()" data-i18n-title="tooltip.clearSearch" title="Clear search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
@@ -1511,19 +1514,19 @@
         </div>
         <div class="filter-row">
           <select id="project-filter" class="filter-dropdown" onchange="filterByProject(this.value)">
-            <option value="">All Projects</option>
+            <option value="" data-i18n="sidebar.allProjects">All Projects</option>
           </select>
           <select id="session-filter" class="filter-dropdown" onchange="filterBySessions(this.value)">
-            <option value="all">All Sessions</option>
-            <option value="active">Active Only</option>
+            <option value="all" data-i18n="sidebar.allSessions">All Sessions</option>
+            <option value="active" data-i18n="sidebar.activeOnly">Active Only</option>
           </select>
         </div>
         <div class="filter-row">
           <select id="session-limit" class="filter-dropdown" onchange="changeSessionLimit(this.value)">
-            <option value="10">Show 10</option>
-            <option value="20">Show 20</option>
-            <option value="50">Show 50</option>
-            <option value="all">Show All</option>
+            <option value="10" data-i18n="sidebar.show10">Show 10</option>
+            <option value="20" data-i18n="sidebar.show20">Show 20</option>
+            <option value="50" data-i18n="sidebar.show50">Show 50</option>
+            <option value="all" data-i18n="sidebar.showAll">Show All</option>
           </select>
         </div>
         <div id="sessions-list" class="sessions-list"></div>
@@ -1542,7 +1545,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
         </svg>
-        <p>Select a session to view tasks</p>
+        <p data-i18n="app.selectSession">Select a session to view tasks</p>
       </div>
 
       <div id="session-view" class="session-view">
@@ -1559,23 +1562,23 @@
               <span id="progress-percent" class="progress-text">0%</span>
             </div>
             <div class="view-toggle">
-              <button id="view-kanban-btn" class="view-toggle-btn active" onclick="switchView('kanban')" title="Kanban view">
+              <button id="view-kanban-btn" class="view-toggle-btn active" onclick="switchView('kanban')" data-i18n-title="tooltip.kanbanView" title="Kanban view">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="12" rx="1"/><rect x="17" y="3" width="5" height="15" rx="1"/>
                 </svg>
               </button>
-              <button id="view-timeline-btn" class="view-toggle-btn" onclick="switchView('timeline')" title="Timeline view">
+              <button id="view-timeline-btn" class="view-toggle-btn" onclick="switchView('timeline')" data-i18n-title="tooltip.timelineView" title="Timeline view">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M3 6h18M3 12h12M3 18h16"/>
                 </svg>
               </button>
             </div>
-            <button id="notifications-toggle" class="icon-btn" onclick="toggleNotifications()" title="Toggle notifications">
+            <button id="notifications-toggle" class="icon-btn" onclick="toggleNotifications()" data-i18n-title="tooltip.toggleNotifications" title="Toggle notifications">
               <svg id="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
               </svg>
             </button>
-            <button id="theme-toggle" class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
+            <button id="theme-toggle" class="icon-btn" onclick="toggleTheme()" data-i18n-title="tooltip.toggleTheme" title="Toggle theme">
               <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
               </svg>
@@ -1584,7 +1587,10 @@
                 <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
               </svg>
             </button>
-            <button class="icon-btn" onclick="showHelpModal()" title="Keyboard shortcuts (?)">
+            <button id="lang-toggle" class="icon-btn" onclick="toggleLanguage()" title="Switch language" style="font-size: 11px; font-weight: 600; width: auto; padding: 0 8px;">
+              <span id="lang-label">EN</span>
+            </button>
+            <button class="icon-btn" onclick="showHelpModal()" data-i18n-title="tooltip.shortcuts" title="Keyboard shortcuts (?)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
@@ -1598,7 +1604,7 @@
           <div class="kanban-column">
             <div class="column-header">
               <span class="column-dot pending"></span>
-              <span class="column-title pending">Pending</span>
+              <span class="column-title pending" data-i18n="kanban.pending">Pending</span>
               <span id="pending-count" class="column-count pending">0</span>
             </div>
             <div id="pending-tasks" class="column-tasks"></div>
@@ -1607,7 +1613,7 @@
           <div class="kanban-column">
             <div class="column-header">
               <span class="column-dot in-progress"></span>
-              <span class="column-title in-progress">In Progress</span>
+              <span class="column-title in-progress" data-i18n="kanban.inProgress">In Progress</span>
               <span id="in-progress-count" class="column-count in-progress">0</span>
             </div>
             <div id="in-progress-tasks" class="column-tasks"></div>
@@ -1616,7 +1622,7 @@
           <div class="kanban-column">
             <div class="column-header">
               <span class="column-dot completed"></span>
-              <span class="column-title completed">Completed</span>
+              <span class="column-title completed" data-i18n="kanban.completed">Completed</span>
               <span id="completed-count" class="column-count completed">0</span>
             </div>
             <div id="completed-tasks" class="column-tasks"></div>
@@ -1640,7 +1646,7 @@
     <!-- Detail panel -->
     <aside id="detail-panel" class="detail-panel">
       <header class="detail-header">
-        <h3>Task Details</h3>
+        <h3 data-i18n="detail.title">Task Details</h3>
         <button id="close-detail" class="detail-close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 18L18 6M6 6l12 12"/>
@@ -1652,6 +1658,49 @@
   </div>
 
   <script>
+    // i18n initialization
+    const savedLang = localStorage.getItem('lang') || 'en';
+
+    function updateI18nDOM() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = i18next.t(key);
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = i18next.t(key);
+      });
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        el.title = i18next.t(key);
+      });
+    }
+
+    function updateLangButton() {
+      const label = document.getElementById('lang-label');
+      if (label) {
+        label.textContent = i18next.t('lang.switchLabel');
+      }
+    }
+
+    function toggleLanguage() {
+      const newLang = i18next.language === 'en' ? 'ja' : 'en';
+      i18next.changeLanguage(newLang).then(() => {
+        localStorage.setItem('lang', newLang);
+        updateI18nDOM();
+        updateLangButton();
+        // Re-render dynamic content
+        renderSessions();
+        if (viewMode === 'all') {
+          renderAllTasks();
+        } else if (currentSessionId) {
+          renderSession();
+        }
+        fetchLiveUpdates();
+        updateNotificationButton();
+      });
+    }
+
     // State
     let sessions = [];
     let currentSessionId = null;
@@ -1761,14 +1810,14 @@
         : currentTasks.filter(t => t.sessionId === sessionId);
 
       if (sessionTasks.length === 0) {
-        alert('No tasks to delete in this session');
+        alert(i18next.t('session.noTasksToDelete'));
         return;
       }
 
       bulkDeleteSessionId = sessionId;
 
       const displayName = session.name || sessionId;
-      const message = `Delete all ${sessionTasks.length} task(s) from session "${displayName}"?`;
+      const message = i18next.t('modal.deleteAllConfirm', { count: sessionTasks.length, name: displayName });
 
       document.getElementById('delete-session-tasks-message').textContent = message;
 
@@ -1883,10 +1932,10 @@
       const detailsEl = document.getElementById('delete-result-details');
 
       if (failedCount === 0) {
-        messageEl.textContent = `Successfully deleted all ${successCount} task(s).`;
+        messageEl.textContent = i18next.t('modal.deleteSuccess', { count: successCount });
         detailsEl.style.display = 'none';
       } else {
-        messageEl.textContent = `Deleted ${successCount} task(s). Failed to delete ${failedCount} task(s).`;
+        messageEl.textContent = i18next.t('modal.deletePartial', { success: successCount, failed: failedCount });
 
         const failedList = failedTasks.map(t =>
           `<li><strong>${escapeHtml(t.subject)}</strong> (#${escapeHtml(t.id)}): ${escapeHtml(t.error)}</li>`
@@ -1957,7 +2006,7 @@
       const container = document.getElementById('live-updates');
 
       if (activeTasks.length === 0) {
-        container.innerHTML = '<div class="live-empty">No active tasks</div>';
+        container.innerHTML = `<div class="live-empty">${i18next.t('kanban.noActive')}</div>`;
         return;
       }
 
@@ -2028,10 +2077,10 @@
       const percent = totalTasks > 0 ? Math.round((completed / totalTasks) * 100) : 0;
 
       const projectName = filterProject ? filterProject.split('/').pop() : null;
-      sessionTitle.textContent = filterProject ? `Tasks: ${projectName}` : 'All Tasks';
+      sessionTitle.textContent = filterProject ? i18next.t('task.tasksInProject', { project: projectName }) : i18next.t('task.allTasks');
       sessionMeta.textContent = filterProject
-        ? `${totalTasks} tasks in this project`
-        : `${totalTasks} tasks across ${sessions.length} sessions`;
+        ? i18next.t('task.tasksInThisProject', { count: totalTasks })
+        : i18next.t('task.tasksAcrossSessions', { count: totalTasks, sessions: sessions.length });
       progressPercent.textContent = `${percent}%`;
       progressBar.style.width = `${percent}%`;
 
@@ -2074,21 +2123,21 @@
       }
 
       if (filteredSessions.length === 0) {
-        let emptyMsg = 'No sessions found';
-        let emptyHint = 'Tasks appear when you use Claude Code';
+        let emptyMsg = i18next.t('session.noSessions');
+        let emptyHint = i18next.t('session.sessionsAppear');
 
         if (searchQuery) {
-          emptyMsg = `No results for "${searchQuery}"`;
-          emptyHint = 'Try a different search term or clear the search';
+          emptyMsg = i18next.t('session.noResults', { query: searchQuery });
+          emptyHint = i18next.t('session.tryDifferent');
         } else if (filterProject && sessionFilter === 'active') {
-          emptyMsg = 'No active sessions for this project';
-          emptyHint = 'Try "All Sessions" or "All Projects"';
+          emptyMsg = i18next.t('session.noActiveForProject');
+          emptyHint = i18next.t('session.tryAllSessions');
         } else if (filterProject) {
-          emptyMsg = 'No sessions for this project';
-          emptyHint = 'Select "All Projects" to see all';
+          emptyMsg = i18next.t('session.noSessionsForProject');
+          emptyHint = i18next.t('session.selectAllProjects');
         } else if (sessionFilter === 'active') {
-          emptyMsg = 'No active sessions';
-          emptyHint = 'Select "All Sessions" to see all';
+          emptyMsg = i18next.t('session.noActiveSessions');
+          emptyHint = i18next.t('session.selectAllSessions');
         }
         sessionsList.innerHTML = `
           <div style="padding: 24px 12px; text-align: center; color: var(--text-muted); font-size: 12px;">
@@ -2120,7 +2169,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 18l6-6-6-6"/>
             </svg>
-            <span>Archived (${archivedSessions.length})</span>
+            <span>${i18next.t('session.archived')} (${archivedSessions.length})</span>
           </div>
           <div class="archived-sessions ${archivedExpanded ? 'visible' : ''}">
             ${archivedSessions.map(session => renderSessionItem(session, true)).join('')}
@@ -2180,7 +2229,7 @@
       // Create header with delete button
       sessionTitle.innerHTML = `
         <span style="flex: 1;">${escapeHtml(displayName)}</span>
-        <button class="icon-btn icon-btn-danger" onclick="deleteAllSessionTasks('${session.id}')" title="Delete all tasks in this session">
+        <button class="icon-btn icon-btn-danger" onclick="deleteAllSessionTasks('${session.id}')" title="${i18next.t('tooltip.deleteAllTasks')}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
           </svg>
@@ -2189,7 +2238,7 @@
 
       // Build meta text with project path, branch, and description
       const projectName = session.project ? session.project.split('/').pop() : null;
-      const metaParts = [`${currentTasks.length} tasks`];
+      const metaParts = [i18next.t('task.taskCount', { count: currentTasks.length })];
       if (projectName) {
         metaParts.push(projectName);
       }
@@ -2235,12 +2284,12 @@
           class="task-card ${statusClass} ${isBlocked ? 'blocked' : ''}">
           <div class="task-id">
             <span>#${taskId}</span>
-            ${isBlocked ? '<span class="task-badge blocked">Blocked</span>' : ''}
+            ${isBlocked ? `<span class="task-badge blocked">${i18next.t('task.blocked')}</span>` : ''}
           </div>
           <div class="task-title">${escapeHtml(task.subject)}</div>
           ${sessionLabel ? `<div class="task-session">${escapeHtml(sessionLabel)}</div>` : ''}
           ${task.status === 'in_progress' && task.activeForm ? `<div class="task-active">${escapeHtml(task.activeForm)}</div>` : ''}
-          ${isBlocked ? `<div class="task-blocked">Waiting on ${task.blockedBy.map(id => '#' + id).join(', ')}</div>` : ''}
+          ${isBlocked ? `<div class="task-blocked">${i18next.t('task.waitingOn', { ids: task.blockedBy.map(id => '#' + id).join(', ') })}</div>` : ''}
           ${task.description ? `<div class="task-desc">${escapeHtml(task.description.split('\n')[0])}</div>` : ''}
         </div>
       `;
@@ -2257,15 +2306,15 @@
 
       pendingTasks.innerHTML = pending.length > 0
         ? pending.map(renderTaskCard).join('')
-        : '<div class="column-empty">No pending tasks</div>';
+        : `<div class="column-empty">${i18next.t('kanban.noPending')}</div>`;
 
       inProgressTasks.innerHTML = inProgress.length > 0
         ? inProgress.map(renderTaskCard).join('')
-        : '<div class="column-empty">No active tasks</div>';
+        : `<div class="column-empty">${i18next.t('kanban.noActive')}</div>`;
 
       completedTasks.innerHTML = completed.length > 0
         ? completed.map(renderTaskCard).join('')
-        : '<div class="column-empty">No completed tasks</div>';
+        : `<div class="column-empty">${i18next.t('kanban.noCompleted')}</div>`;
 
       // Also update timeline if visible
       if (currentView === 'timeline') {
@@ -2282,7 +2331,7 @@
       let options = '';
 
       if (pending.length > 0) {
-        options += '<optgroup label="Pending">';
+        options += `<optgroup label="${i18next.t('kanban.pending')}">`;
         pending.forEach((t, idx) => {
           options += `<option value="${t.id}">#${t.id} - ${escapeHtml(t.subject)}</option>`;
         });
@@ -2290,7 +2339,7 @@
       }
 
       if (inProgress.length > 0) {
-        options += '<optgroup label="In Progress">';
+        options += `<optgroup label="${i18next.t('kanban.inProgress')}">`;
         inProgress.forEach((t, idx) => {
           options += `<option value="${t.id}">#${t.id} - ${escapeHtml(t.subject)}</option>`;
         });
@@ -2298,7 +2347,7 @@
       }
 
       if (completed.length > 0) {
-        options += '<optgroup label="Completed">';
+        options += `<optgroup label="${i18next.t('kanban.completed')}">`;
         completed.forEach((t, idx) => {
           options += `<option value="${t.id}">#${t.id} - ${escapeHtml(t.subject)}</option>`;
         });
@@ -2329,9 +2378,9 @@
       detailPanel.classList.add('visible');
 
       const statusLabels = {
-        completed: '<span class="detail-status completed"><span class="dot"></span>Completed</span>',
-        in_progress: '<span class="detail-status in_progress"><span class="dot"></span>In Progress</span>',
-        pending: '<span class="detail-status pending"><span class="dot"></span>Pending</span>'
+        completed: `<span class="detail-status completed"><span class="dot"></span>${i18next.t('detail.statusCompleted')}</span>`,
+        in_progress: `<span class="detail-status in_progress"><span class="dot"></span>${i18next.t('detail.statusInProgress')}</span>`,
+        pending: `<span class="detail-status pending"><span class="dot"></span>${i18next.t('detail.statusPending')}</span>`
       };
 
       const isBlocked = isTaskActuallyBlocked(task);
@@ -2341,11 +2390,11 @@
         <div class="detail-section">
           <div style="display: flex; justify-content: space-between; align-items: start;">
             <div style="flex: 1;">
-              <div class="detail-label">Task #${task.id}</div>
+              <div class="detail-label">${i18next.t('detail.taskId', { id: task.id })}</div>
               <h2 class="detail-title">${escapeHtml(task.subject)}</h2>
             </div>
             <div style="display: flex; gap: 8px;">
-              <button id="delete-task-btn" class="icon-btn" title="Delete task (D)" style="color: #ef4444; border-color: #ef4444;">
+              <button id="delete-task-btn" class="icon-btn" title="${i18next.t('tooltip.deleteTask')}" style="color: #ef4444; border-color: #ef4444;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
                 </svg>
@@ -2355,50 +2404,50 @@
         </div>
 
         <div class="detail-section">
-          <div class="detail-label">Status</div>
+          <div class="detail-label">${i18next.t('detail.status')}</div>
           <div style="font-size: 14px; color: var(--text-primary); padding: 8px 12px; background: var(--bg-secondary); border-radius: 6px; display: inline-block;">
-            ${task.status === 'pending' ? 'Pending' : task.status === 'in_progress' ? 'In Progress' : 'Completed'}
+            ${task.status === 'pending' ? i18next.t('detail.statusPending') : task.status === 'in_progress' ? i18next.t('detail.statusInProgress') : i18next.t('detail.statusCompleted')}
           </div>
-          ${isBlocked && task.status !== 'in_progress' ? '<div style="font-size: 10px; color: var(--warning); margin-top: 4px;">Blocked by dependencies</div>' : ''}
-          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Status is controlled by Claude Code</div>
+          ${isBlocked && task.status !== 'in_progress' ? `<div style="font-size: 10px; color: var(--warning); margin-top: 4px;">${i18next.t('detail.blockedByDeps')}</div>` : ''}
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">${i18next.t('detail.statusControlled')}</div>
         </div>
 
         ${task.activeForm && task.status === 'in_progress' ? `
           <div class="detail-section">
             <div class="detail-box active">
-              <strong>Currently:</strong> ${escapeHtml(task.activeForm)}
+              <strong>${i18next.t('detail.currently')}</strong> ${escapeHtml(task.activeForm)}
             </div>
           </div>
         ` : ''}
 
         <div class="detail-section">
-          <div class="detail-label">Blocked By</div>
+          <div class="detail-label">${i18next.t('detail.blockedBy')}</div>
           <div class="detail-desc">
             ${task.blockedBy && task.blockedBy.length > 0
-              ? `<div class="detail-box blocked"><strong>Blocked by:</strong> ${task.blockedBy.map(id => '#' + id).join(', ')}</div>`
-              : '<em style="color: var(--text-muted); font-size: 13px;">No dependencies</em>'}
+              ? `<div class="detail-box blocked"><strong>${i18next.t('detail.blockedByLabel')}</strong> ${task.blockedBy.map(id => '#' + id).join(', ')}</div>`
+              : `<em style="color: var(--text-muted); font-size: 13px;">${i18next.t('detail.noDependencies')}</em>`}
           </div>
         </div>
 
         <div class="detail-section">
-          <div class="detail-label">Blocks</div>
+          <div class="detail-label">${i18next.t('detail.blocks')}</div>
           <div class="detail-desc">
             ${task.blocks && task.blocks.length > 0
-              ? `<div class="detail-box blocks"><strong>Blocks:</strong> ${task.blocks.map(id => '#' + id).join(', ')}</div>`
-              : '<em style="color: var(--text-muted); font-size: 13px;">No tasks blocked</em>'}
+              ? `<div class="detail-box blocks"><strong>${i18next.t('detail.blocksLabel')}</strong> ${task.blocks.map(id => '#' + id).join(', ')}</div>`
+              : `<em style="color: var(--text-muted); font-size: 13px;">${i18next.t('detail.noTasksBlocked')}</em>`}
           </div>
         </div>
 
         <div class="detail-section">
-          <div class="detail-label">Description</div>
-          <div class="detail-desc">${task.description ? DOMPurify.sanitize(marked.parse(task.description)) : '<em style="color: var(--text-muted);">No description</em>'}</div>
+          <div class="detail-label">${i18next.t('detail.description')}</div>
+          <div class="detail-desc">${task.description ? DOMPurify.sanitize(marked.parse(task.description)) : `<em style="color: var(--text-muted);">${i18next.t('detail.noDescription')}</em>`}</div>
         </div>
 
         <div class="detail-section note-section">
-          <div class="detail-label">Add Note</div>
+          <div class="detail-label">${i18next.t('detail.addNote')}</div>
           <form class="note-form" onsubmit="addNote(event, '${task.id}', '${actualSessionId}')">
-            <textarea id="note-input" class="note-input" placeholder="Add a note for Claude..." rows="3"></textarea>
-            <button type="submit" class="note-submit">Add Note</button>
+            <textarea id="note-input" class="note-input" placeholder="${i18next.t('detail.notePlaceholder')}" rows="3"></textarea>
+            <button type="submit" class="note-submit">${i18next.t('detail.addNote')}</button>
           </form>
         </div>
       `;
@@ -2455,10 +2504,10 @@
       }).join('');
 
       messageDiv.innerHTML = `
-        <p style="margin-bottom: 12px;">Task <strong>#${task.id}</strong> - ${escapeHtml(task.subject)} is currently blocked by:</p>
+        <p style="margin-bottom: 12px;">${i18next.t('modal.blockedTaskMsg', { id: task.id, subject: escapeHtml(task.subject) })}</p>
         <ul style="margin: 0 0 16px 20px; padding: 0;">${blockedByList}</ul>
         <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">
-          Please resolve these dependencies before moving this task to <strong>In Progress</strong>.
+          ${i18next.t('modal.resolveFirst')}
         </p>
       `;
 
@@ -2489,7 +2538,7 @@
       deleteSessionId = sessionId;
 
       const message = document.getElementById('delete-confirm-message');
-      message.textContent = `Delete task "${task.subject}"? This cannot be undone.`;
+      message.textContent = i18next.t('modal.deleteConfirm', { subject: task.subject });
 
       const modal = document.getElementById('delete-confirm-modal');
       modal.classList.add('visible');
@@ -2617,7 +2666,7 @@
           retryDelay = 1000; // Reset on successful connection
           connectionStatus.innerHTML = `
             <span class="connection-dot live"></span>
-            <span>Connected</span>
+            <span>${i18next.t('connection.connected')}</span>
           `;
         };
 
@@ -2625,7 +2674,7 @@
           eventSource.close();
           connectionStatus.innerHTML = `
             <span class="connection-dot error"></span>
-            <span>Reconnecting...</span>
+            <span>${i18next.t('connection.reconnecting')}</span>
           `;
           setTimeout(connect, retryDelay);
           retryDelay = Math.min(retryDelay * 2, 30000); // Max 30s
@@ -2657,9 +2706,9 @@
       const now = new Date();
       const diff = now - date;
 
-      if (diff < 60000) return 'just now';
-      if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-      if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+      if (diff < 60000) return i18next.t('time.justNow');
+      if (diff < 3600000) return i18next.t('time.minutesAgo', { count: Math.floor(diff / 60000) });
+      if (diff < 86400000) return i18next.t('time.hoursAgo', { count: Math.floor(diff / 3600000) });
       return date.toLocaleDateString();
     }
 
@@ -2692,7 +2741,7 @@
       const dropdown = document.getElementById('project-filter');
       const projects = [...new Set(sessions.map(s => s.project).filter(Boolean))].sort();
 
-      dropdown.innerHTML = '<option value="">All Projects</option>' +
+      dropdown.innerHTML = `<option value="">${i18next.t('sidebar.allProjects')}</option>` +
         projects.map(p => {
           const name = p.split('/').pop();
           const selected = p === filterProject ? ' selected' : '';
@@ -2749,7 +2798,7 @@
       const tasks = [...currentTasks].filter(t => t.createdAt);
       if (tasks.length === 0) {
         document.getElementById('timeline-rows').innerHTML =
-          '<div style="padding: 32px; text-align: center; color: var(--text-muted);">No tasks with timestamp data</div>';
+          `<div style="padding: 32px; text-align: center; color: var(--text-muted);">${i18next.t('session.noTimestampData')}</div>`;
         document.getElementById('timeline-axis').innerHTML = '';
         return;
       }
@@ -2869,17 +2918,17 @@
       const btn = document.getElementById('notifications-toggle');
       if (notificationsEnabled) {
         btn.classList.add('notifications-active');
-        btn.title = 'Notifications on (click to mute)';
+        btn.title = i18next.t('notification.notificationsOn');
       } else {
         btn.classList.remove('notifications-active');
-        btn.title = 'Notifications off (click to enable)';
+        btn.title = i18next.t('notification.notificationsOff');
       }
     }
 
     function fireTaskNotification(task) {
       // Desktop notification
       if (Notification.permission === 'granted') {
-        const n = new Notification('Task completed', {
+        const n = new Notification(i18next.t('notification.taskCompleted'), {
           body: task.subject,
           icon: undefined,
           tag: `task-${task.sessionId}-${task.id}`
@@ -2952,28 +3001,46 @@
     // Init
     loadTheme();
     loadPreferences();
-    updateNotificationButton();
-    if (currentView === 'timeline') {
-      switchView('timeline');
-    }
-    setupEventSource();
 
-    // Fetch sessions and show newest one by default
-    fetchSessions().then(() => {
-      if (sessions.length > 0) {
-        // Sessions are already sorted by newest first from API
-        fetchTasks(sessions[0].id);
-      } else {
-        showAllTasks();
-      }
-    });
+    // Initialize i18next then boot the app
+    i18next
+      .use(i18nextHttpBackend)
+      .init({
+        lng: savedLang,
+        fallbackLng: 'en',
+        backend: {
+          loadPath: '/locales/{{lng}}/{{ns}}.json'
+        },
+        interpolation: {
+          escapeValue: false
+        }
+      })
+      .then(() => {
+        updateI18nDOM();
+        updateLangButton();
+        updateNotificationButton();
+        if (currentView === 'timeline') {
+          switchView('timeline');
+        }
+        setupEventSource();
+
+        // Fetch sessions and show newest one by default
+        fetchSessions().then(() => {
+          if (sessions.length > 0) {
+            // Sessions are already sorted by newest first from API
+            fetchTasks(sessions[0].id);
+          } else {
+            showAllTasks();
+          }
+        });
+      });
   </script>
 
   <!-- Help Modal -->
   <div id="help-modal" class="modal-overlay" onclick="closeHelpModal()">
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title">Keyboard Shortcuts</h3>
+        <h3 class="modal-title" data-i18n="modal.keyboardShortcuts">Keyboard Shortcuts</h3>
         <button class="modal-close" onclick="closeHelpModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
@@ -2983,48 +3050,48 @@
       <div class="modal-body">
         <div style="display: grid; gap: 16px;">
           <div>
-            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;">Global</h4>
+            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;" data-i18n="modal.global">Global</h4>
             <table style="width: 100%; font-size: 13px;">
               <tr>
                 <td style="padding: 4px 0; color: var(--text-secondary);"><kbd style="background: var(--bg-hover); padding: 2px 6px; border-radius: 4px; font-family: monospace;">?</kbd></td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Show keyboard shortcuts</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.showShortcuts">Show keyboard shortcuts</td>
               </tr>
               <tr>
                 <td style="padding: 4px 0; color: var(--text-secondary);"><kbd style="background: var(--bg-hover); padding: 2px 6px; border-radius: 4px; font-family: monospace;">Esc</kbd></td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Close panels or cancel</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.closePanels">Close panels or cancel</td>
               </tr>
             </table>
           </div>
           <div>
-            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;">Task Actions</h4>
+            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;" data-i18n="modal.taskActions">Task Actions</h4>
             <table style="width: 100%; font-size: 13px;">
               <tr>
                 <td style="padding: 4px 0; color: var(--text-secondary);"><kbd style="background: var(--bg-hover); padding: 2px 6px; border-radius: 4px; font-family: monospace;">D</kbd></td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Delete selected task</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.deleteSelectedTask">Delete selected task</td>
               </tr>
             </table>
           </div>
           <div>
-            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;">Features</h4>
+            <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 14px; font-weight: 600;" data-i18n="modal.features">Features</h4>
             <table style="width: 100%; font-size: 13px;">
               <tr>
-                <td style="padding: 4px 0; color: var(--text-secondary);">Bell icon</td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Desktop + sound notifications on task completion</td>
+                <td style="padding: 4px 0; color: var(--text-secondary);" data-i18n="modal.bellIcon">Bell icon</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.bellDesc">Desktop + sound notifications on task completion</td>
               </tr>
               <tr>
-                <td style="padding: 4px 0; color: var(--text-secondary);">View toggle</td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Switch between kanban and timeline views</td>
+                <td style="padding: 4px 0; color: var(--text-secondary);" data-i18n="modal.viewToggle">View toggle</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.viewToggleDesc">Switch between kanban and timeline views</td>
               </tr>
               <tr>
-                <td style="padding: 4px 0; color: var(--text-secondary);">Archive</td>
-                <td style="padding: 4px 0; color: var(--text-primary);">Sessions older than 7 days with no active tasks auto-archive</td>
+                <td style="padding: 4px 0; color: var(--text-secondary);" data-i18n="modal.archive">Archive</td>
+                <td style="padding: 4px 0; color: var(--text-primary);" data-i18n="modal.archiveDesc">Sessions older than 7 days with no active tasks auto-archive</td>
               </tr>
             </table>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" onclick="closeHelpModal()">Got it</button>
+        <button class="btn btn-primary" onclick="closeHelpModal()" data-i18n="modal.gotIt">Got it</button>
       </div>
     </div>
   </div>
@@ -3033,7 +3100,7 @@
   <div id="delete-confirm-modal" class="modal-overlay" onclick="closeDeleteConfirmModal()">
     <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px;">
       <div class="modal-header">
-        <h3 class="modal-title">Delete Task</h3>
+        <h3 class="modal-title" data-i18n="modal.deleteTask">Delete Task</h3>
         <button class="modal-close" onclick="closeDeleteConfirmModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
@@ -3044,8 +3111,8 @@
         <p id="delete-confirm-message" style="margin: 0; color: var(--text-primary);"></p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeDeleteConfirmModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="confirmDelete()" style="background: #ef4444; border-color: #ef4444;">Delete</button>
+        <button class="btn btn-secondary" onclick="closeDeleteConfirmModal()" data-i18n="modal.cancel">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmDelete()" style="background: #ef4444; border-color: #ef4444;" data-i18n="modal.delete">Delete</button>
       </div>
     </div>
   </div>
@@ -3054,7 +3121,7 @@
   <div id="delete-session-tasks-modal" class="modal-overlay" onclick="closeDeleteSessionTasksModal()">
     <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
       <div class="modal-header">
-        <h3 class="modal-title">Delete All Tasks</h3>
+        <h3 class="modal-title" data-i18n="modal.deleteAllTasks">Delete All Tasks</h3>
         <button class="modal-close" onclick="closeDeleteSessionTasksModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
@@ -3063,11 +3130,11 @@
       </div>
       <div class="modal-body">
         <p id="delete-session-tasks-message" style="margin: 0 0 12px 0; color: var(--text-primary);"></p>
-        <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">This action cannot be undone.</p>
+        <p style="margin: 0; font-size: 13px; color: var(--text-secondary);" data-i18n="modal.cannotBeUndone">This action cannot be undone.</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeDeleteSessionTasksModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="confirmDeleteSessionTasks()" style="background: #ef4444; border-color: #ef4444;">Delete All</button>
+        <button class="btn btn-secondary" onclick="closeDeleteSessionTasksModal()" data-i18n="modal.cancel">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmDeleteSessionTasks()" style="background: #ef4444; border-color: #ef4444;" data-i18n="modal.deleteAll">Delete All</button>
       </div>
     </div>
   </div>
@@ -3076,7 +3143,7 @@
   <div id="delete-result-modal" class="modal-overlay" onclick="closeDeleteResultModal()">
     <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
       <div class="modal-header">
-        <h3 class="modal-title">Deletion Result</h3>
+        <h3 class="modal-title" data-i18n="modal.deletionResult">Deletion Result</h3>
         <button class="modal-close" onclick="closeDeleteResultModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
@@ -3088,7 +3155,7 @@
         <div id="delete-result-details" style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" onclick="closeDeleteResultModal()">Close</button>
+        <button class="btn btn-primary" onclick="closeDeleteResultModal()" data-i18n="modal.close">Close</button>
       </div>
     </div>
   </div>
@@ -3103,7 +3170,7 @@
             <line x1="15" y1="9" x2="9" y2="15"/>
             <line x1="9" y1="9" x2="15" y2="15"/>
           </svg>
-          Cannot Start Blocked Task
+          <span data-i18n="modal.cannotStartBlocked">Cannot Start Blocked Task</span>
         </h3>
         <button class="modal-close" onclick="closeBlockedTaskModal()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3115,7 +3182,7 @@
         <div id="blocked-task-message" style="color: var(--text-primary); line-height: 1.6;"></div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" onclick="closeBlockedTaskModal()">OK</button>
+        <button class="btn btn-primary" onclick="closeBlockedTaskModal()" data-i18n="modal.ok">OK</button>
       </div>
     </div>
   </div>
