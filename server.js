@@ -437,64 +437,65 @@ function broadcast(data) {
   }
 }
 
-// Watch for file changes (chokidar handles non-existent paths)
-const watcher = chokidar.watch(TASKS_DIR, {
-  persistent: true,
-  ignoreInitial: true,
-  depth: 2
-});
+// Watch for file changes and start server only when run directly
+if (require.main === module) {
+  const watcher = chokidar.watch(TASKS_DIR, {
+    persistent: true,
+    ignoreInitial: true,
+    depth: 2
+  });
 
-watcher.on('all', (event, filePath) => {
-  if (filePath.endsWith('.json')) {
-    const relativePath = path.relative(TASKS_DIR, filePath);
-    const sessionId = relativePath.split(path.sep)[0];
+  watcher.on('all', (event, filePath) => {
+    if (filePath.endsWith('.json')) {
+      const relativePath = path.relative(TASKS_DIR, filePath);
+      const sessionId = relativePath.split(path.sep)[0];
 
-    broadcast({
-      type: 'update',
-      event,
-      sessionId,
-      file: path.basename(filePath)
+      broadcast({
+        type: 'update',
+        event,
+        sessionId,
+        file: path.basename(filePath)
+      });
+    }
+  });
+
+  console.log(`Watching for changes in: ${TASKS_DIR}`);
+
+  const projectsWatcher = chokidar.watch(PROJECTS_DIR, {
+    persistent: true,
+    ignoreInitial: true,
+    depth: 2
+  });
+
+  projectsWatcher.on('all', (event, filePath) => {
+    if (filePath.endsWith('.jsonl')) {
+      lastMetadataRefresh = 0;
+      broadcast({ type: 'metadata-update' });
+    }
+  });
+
+  // Start server with auto port discovery
+  function startServer(port, attempt = 0) {
+    const server = app.listen(port, () => {
+      console.log(`Claude Task Viewer running at http://localhost:${port}`);
+
+      if (process.argv.includes('--open')) {
+        import('open').then(open => open.default(`http://localhost:${port}`));
+      }
+    });
+
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE' && !explicitPort && attempt < MAX_PORT_ATTEMPTS) {
+        console.log(`Port ${port} is in use, trying ${port + 1}...`);
+        startServer(port + 1, attempt + 1);
+      } else {
+        console.error(`Failed to start server on port ${port}: ${err.message}`);
+        process.exit(1);
+      }
     });
   }
-});
 
-console.log(`Watching for changes in: ${TASKS_DIR}`);
-
-// Also watch projects dir for metadata changes
-const projectsWatcher = chokidar.watch(PROJECTS_DIR, {
-  persistent: true,
-  ignoreInitial: true,
-  depth: 2
-});
-
-projectsWatcher.on('all', (event, filePath) => {
-  if (filePath.endsWith('.jsonl')) {
-    // Invalidate cache on any change
-    lastMetadataRefresh = 0;
-    broadcast({ type: 'metadata-update' });
-  }
-});
-
-// Start server with auto port discovery
-function startServer(port, attempt = 0) {
-  const server = app.listen(port, () => {
-    console.log(`Claude Task Viewer running at http://localhost:${port}`);
-
-    // Open browser if --open flag is passed
-    if (process.argv.includes('--open')) {
-      import('open').then(open => open.default(`http://localhost:${port}`));
-    }
-  });
-
-  server.on('error', (err) => {
-    if (err.code === 'EADDRINUSE' && !explicitPort && attempt < MAX_PORT_ATTEMPTS) {
-      console.log(`Port ${port} is in use, trying ${port + 1}...`);
-      startServer(port + 1, attempt + 1);
-    } else {
-      console.error(`Failed to start server on port ${port}: ${err.message}`);
-      process.exit(1);
-    }
-  });
+  startServer(explicitPort || DEFAULT_PORT);
 }
 
-startServer(explicitPort || DEFAULT_PORT);
+module.exports = { app, readSessionInfoFromJsonl, getSessionDisplayName, getClaudeDir, TASKS_DIR, PROJECTS_DIR };

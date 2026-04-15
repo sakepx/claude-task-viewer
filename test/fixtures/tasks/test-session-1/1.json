@@ -1,0 +1,8 @@
+{
+  "id": "1",
+  "subject": "Set up project structure",
+  "description": "Initialize the project with basic folder structure",
+  "status": "completed",
+  "blocks": ["2"],
+  "blockedBy": []
+}

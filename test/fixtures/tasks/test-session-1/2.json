@@ -1,0 +1,9 @@
+{
+  "id": "2",
+  "subject": "Implement API endpoints",
+  "description": "Add REST API for task management",
+  "status": "in_progress",
+  "activeForm": "Writing GET /api/sessions",
+  "blocks": [],
+  "blockedBy": ["1"]
+}
